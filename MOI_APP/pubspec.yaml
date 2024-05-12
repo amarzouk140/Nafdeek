@@ -1,0 +1,22 @@
+name: MOI_APP
+description: A new Flutter project.
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Any other dependencies you might have
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+# Defining the assets directory
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/images/
