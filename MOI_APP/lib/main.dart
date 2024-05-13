@@ -568,7 +568,45 @@ class VolunteerProfilePage extends StatelessWidget {
 }
 
 
-class NafdeekPage extends StatelessWidget {
+class NafdeekPage extends StatefulWidget {
+  @override
+  _NafdeekPageState createState() => _NafdeekPageState();
+}
+
+class _NafdeekPageState extends State<NafdeekPage> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _fadeAnimation;
+  bool _showButtons = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: Duration(seconds: 3),
+      vsync: this,
+    );
+
+    _fadeAnimation = Tween<double>(begin: 1.0, end: 0.0).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeOut)
+    );
+
+    _controller.forward();
+
+    _controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed) {
+        setState(() {
+          _showButtons = true;
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -576,64 +614,82 @@ class NafdeekPage extends StatelessWidget {
         title: Text("NAFDEEK Portal"),
         backgroundColor: Color(0xFF013A6B),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              Expanded(
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF013A6B),
-                    foregroundColor: Colors.white,
-                    padding: EdgeInsets.symmetric(vertical: 20),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => RequestNafdeekServicePage()),
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Image.asset('assets/images/logo2.png', width: 60, height: 60),
-                      SizedBox(height: 10),
-                      Text('Request for NAFDEEK', textAlign: TextAlign.center),
-                    ],
-                  ),
-                ),
-              ),
-              SizedBox(width: 20), // Space between the buttons
-              Expanded(
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF013A6B),
-                    foregroundColor: Colors.white,
-                    padding: EdgeInsets.symmetric(vertical: 20),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                  ),
-                  onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => VolunteerProfilePage()),
-                  ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.person, size: 60, color: Colors.white),  // Using a white Flutter icon
-                      SizedBox(height: 10),
-                      Text('Volunteer Page', textAlign: TextAlign.center),
-                    ],
-                  ),
-                ),
-              ),
-            ],
+      body: Stack(
+        children: [
+          Center(
+            child: FadeTransition(
+              opacity: _fadeAnimation,
+              child: Image.asset('assets/images/logo1.png', width: 300, height: 300),
+            ),
           ),
-        ),
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  if (_showButtons) ...[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Expanded(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0xFF013A6B),
+                              foregroundColor: Colors.white,
+                              padding: EdgeInsets.symmetric(vertical: 20),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            onPressed: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => RequestNafdeekServicePage()),
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Image.asset('assets/images/logo2.png', width: 60, height: 60),
+                                SizedBox(height: 10),
+                                Text('Request for NAFDEEK', textAlign: TextAlign.center),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 20), // Space between the buttons
+                        Expanded(
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0xFF013A6B),
+                              foregroundColor: Colors.white,
+                              padding: EdgeInsets.symmetric(vertical: 20),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            onPressed: () => Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => VolunteerProfilePage()),
+                            ),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                Icon(Icons.person, size: 60, color: Colors.white),
+                                SizedBox(height: 10),
+                                Text('Volunteer Page', textAlign: TextAlign.center),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -679,9 +735,12 @@ class RequestNafdeekServicePage extends StatelessWidget {
               Flexible(
                 child: ElevatedButton.icon(
                   icon: Icon(Icons.video_call, size: 40),
-                  label: Text('Virtual Assistance   '),
+                  label: Text('Virtual Assistance    '),
                   onPressed: () {
-                    // Implement the functionality for online help via video call
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => VirtualAssistancePage()),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF013A6B),
@@ -701,6 +760,7 @@ class RequestNafdeekServicePage extends StatelessWidget {
     );
   }
 }
+
 
 
 
@@ -802,152 +862,198 @@ class AttentionPage extends StatelessWidget {
 
 
 
+class RequestServicePage extends StatefulWidget {
+  @override
+  _RequestServicePageState createState() => _RequestServicePageState();
+}
 
+class _RequestServicePageState extends State<RequestServicePage> with SingleTickerProviderStateMixin {
+  final GlobalKey<AnimatedListState> _listKey = GlobalKey<AnimatedListState>();
+  List<Map<String, dynamic>> volunteers = [];
+  List<Map<String, dynamic>> initialVolunteers = [
+    {
+      'name': 'Amna Alnaqbi',
+      'rating': 5,
+      'distance': '1 km away',
+      'verified': true,
+      'image': 'assets/images/volunteer1.png',
+    },
+    {
+      'name': 'Mahmod Sayed',
+      'rating': 5,
+      'distance': '1.5 km away',
+      'verified': true,
+      'image': 'assets/images/volunteer2.png',
+    },
+    {
+      'name': 'Ahmed Alshafy',
+      'rating': 3,
+      'distance': '1 km away',
+      'verified': true,
+      'image': 'assets/images/volunteer.png',
+    },
+    {
+      'name': 'Sumyah Helal',
+      'rating': 5,
+      'distance': '2.75 km away',
+      'verified': true,
+      'image': 'assets/images/volunteer4.png',
+    },
+    {
+      'name': 'Ali Alshamsi',
+      'rating': 5,
+      'distance': '4 km away',
+      'verified': true,
+      'image': 'assets/images/volunteer5.png',
+    },
+    {
+      'name': 'Sara Almazrouei',
+      'rating': 4,
+      'distance': '4 km away',
+      'verified': true,
+      'image': 'assets/images/volunteer4.png',
+    },
+    {
+      'name': 'Khalid Alhammadi',
+      'rating': 4,
+      'distance': '4 km away',
+      'verified': true,
+      'image': 'assets/images/volunteer5.png',
+    }
+  ];
 
-class RequestServicePage extends StatelessWidget {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+  bool isSearching = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: Duration(seconds: 2),
+      vsync: this,
+    )..repeat(reverse: true);
+    _animation = Tween<double>(begin: 0.5, end: 1.0).animate(_controller);
+
+    // Simulate a network call delay
+    Future.delayed(Duration(seconds: 3), () {
+      setState(() {
+        isSearching = false;
+      });
+      for (int i = 0; i < initialVolunteers.length; i++) {
+        Future.delayed(Duration(milliseconds: i * 300), () {
+          _listKey.currentState?.insertItem(i);
+          volunteers.add(initialVolunteers[i]);
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    // Sample data for demonstration
-    List<Map<String, dynamic>> volunteers = [
-      {
-        'name': 'Amna Alnaqbi',
-        'rating': 5,
-        'distance': '1 km away',
-        'verified': true,
-        'image': 'assets/images/volunteer1.png',
-      },
-      {
-        'name': 'Mahmod Sayed',
-        'rating': 5,
-        'distance': '1.5 km away',
-        'verified': true,
-        'image': 'assets/images/volunteer2.png',
-      },
-      {
-        'name': 'Ahmed Alshafy',
-        'rating': 3,
-        'distance': '1 km away',
-        'verified': true,
-        'image': 'assets/images/volunteer.png',
-      },
-      {
-        'name': 'Sumyah Helal',
-        'rating': 5,
-        'distance': '2.75 km away',
-        'verified': true,
-        'image': 'assets/images/volunteer4.png',
-      },
-      {
-        'name': 'Ali Alshamsi',
-        'rating': 5,
-        'distance': '4 km away',
-        'verified': true,
-        'image': 'assets/images/volunteer5.png',
-      },
-      {
-        'name': 'Sara Almazrouei',
-        'rating': 4,
-        'distance': '4 km away',
-        'verified': true,
-        'image': 'assets/images/volunteer4.png',
-      },
-      {
-        'name': 'Khalid Alhammadi',
-        'rating': 4,
-        'distance': '4 km away',
-        'verified': true,
-        'image': 'assets/images/volunteer5.png',
-      }
-    ];
-
     return Scaffold(
       appBar: AppBar(
         title: Text("Locate Nearby Help"),
         backgroundColor: Color(0xFF013A6B),
       ),
-      body: FutureBuilder(
-        future: Future.delayed(Duration(seconds: 2)), // Simulate a network call delay
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
+      body: isSearching
+          ? Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CircularProgressIndicator(),
+                  ScaleTransition(
+                    scale: _animation,
+                    child: Icon(
+                      Icons.search,
+                      color: Color(0xFF013A6B),
+                      size: 80,
+                    ),
+                  ),
                   SizedBox(height: 20),
                   Text(
-                    'Searching for volunteers...',
+                    'Searching for available volunteers...',
                     style: TextStyle(fontSize: 18),
+                    textAlign: TextAlign.center,
                   ),
                 ],
               ),
-            );
-          } else {
-            return ListView.separated(
-              itemCount: volunteers.length,
-              itemBuilder: (context, index) {
-                return Card(
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      backgroundImage: AssetImage(volunteers[index]['image']),
-                    ),
-                    title: Row(
-                      children: [
-                        Expanded(
-                          child: Text(
-                            volunteers[index]['name'],
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(fontSize: 16),
-                          ),
-                        ),
-                        if (volunteers[index]['verified'])
-                          Icon(Icons.verified, color: Color(0xFF013A6B), size: 14),
-                      ],
-                    ),
-                    subtitle: Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Row(
-                        children: <Widget>[
-                          ...List.generate(
-                            5,
-                            (i) => Icon(
-                              i < volunteers[index]['rating'] ? Icons.star : Icons.star_border,
-                              color: Colors.amber,
-                              size: 16,
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          Text(
-                            volunteers[index]['distance'],
-                            style: TextStyle(fontSize: 12),
-                          ),
-                        ],
-                      ),
-                    ),
-                    trailing: ElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (context) => SendRequestPage()),
-                        );
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xFF013A6B),
-                        foregroundColor: Colors.white,
-                      ),
-                      child: Text('Send a Request', style: TextStyle(fontSize: 12)),
-                    ),
-                  ),
-                );
+            )
+          : AnimatedList(
+              key: _listKey,
+              initialItemCount: volunteers.length,
+              itemBuilder: (context, index, animation) {
+                return _buildItem(volunteers[index], animation);
               },
-              separatorBuilder: (context, index) => SizedBox(height: 10),
-            );
-          }
-        },
+            ),
+    );
+  }
+
+  Widget _buildItem(Map<String, dynamic> volunteer, Animation<double> animation) {
+    return SizeTransition(
+      sizeFactor: animation,
+      child: Card(
+        child: ListTile(
+          leading: CircleAvatar(
+            backgroundImage: AssetImage(volunteer['image']),
+          ),
+          title: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  volunteer['name'],
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+              if (volunteer['verified'])
+                Icon(Icons.verified, color: Color(0xFF013A6B), size: 14),
+            ],
+          ),
+          subtitle: Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: Row(
+              children: <Widget>[
+                ...List.generate(
+                  5,
+                  (i) => Icon(
+                    i < volunteer['rating'] ? Icons.star : Icons.star_border,
+                    color: Colors.amber,
+                    size: 16,
+                  ),
+                ),
+                SizedBox(width: 10),
+                Text(
+                  volunteer['distance'],
+                  style: TextStyle(fontSize: 12),
+                ),
+              ],
+            ),
+          ),
+          trailing: ElevatedButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SendRequestPage()),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Color(0xFF013A6B),
+              foregroundColor: Colors.white,
+            ),
+            child: Text('Send a Request', style: TextStyle(fontSize: 12)),
+          ),
+        ),
       ),
     );
   }
 }
+
 
 
 class SendRequestPage extends StatefulWidget {
@@ -1022,6 +1128,79 @@ class _SendRequestPageState extends State<SendRequestPage> with SingleTickerProv
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+
+
+
+class VirtualAssistancePage extends StatefulWidget {
+  @override
+  _VirtualAssistancePageState createState() => _VirtualAssistancePageState();
+}
+
+class _VirtualAssistancePageState extends State<VirtualAssistancePage> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: Duration(seconds: 2),
+      vsync: this,
+    )..repeat(reverse: true);
+    _animation = CurvedAnimation(parent: _controller, curve: Curves.easeInOut);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Virtual Assistance"),
+        backgroundColor: Color(0xFF013A6B),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ScaleTransition(
+              scale: _animation,
+              child: Icon(
+                Icons.video_call,
+                color: Color(0xFF013A6B),
+                size: 100,
+              ),
+            ),
+            SizedBox(height: 30),
+            Text(
+              'Connecting to Virtual Assistance...',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF013A6B),
+              ),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 20),
+            Text(
+              'Please wait while we connect you to a specialized volunteer.',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.black54,
+              ),
+              textAlign: TextAlign.center,
+            ),
+          ],
         ),
       ),
     );
