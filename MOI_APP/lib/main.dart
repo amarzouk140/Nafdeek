@@ -475,8 +475,8 @@ class RequestServicePage extends StatelessWidget {
       },
       {
         'name': 'Mahmod Sayed',
-        'rating': 4,
-        'distance': '5 km away',
+        'rating': 5,
+        'distance': '1.5 km away',
         'verified': true,
         'image': 'assets/images/volunteer2.png',
       },
@@ -490,29 +490,29 @@ class RequestServicePage extends StatelessWidget {
       {
         'name': 'Sumyah Helal',
         'rating': 5,
-        'distance': '3 km away',
+        'distance': '2.75 km away',
         'verified': true,
         'image': 'assets/images/volunteer4.png',
       },
       {
-        'name': 'Mohamed Alshamsi',
+        'name': 'Ali Alshamsi',
         'rating': 5,
-        'distance': '2.5 km away',
-        'verified': false,
+        'distance': '4 km away',
+        'verified': true,
         'image': 'assets/images/volunteer5.png',
       },
       {
         'name': 'Sara Almazrouei',
         'rating': 4,
         'distance': '4 km away',
-        'verified': false,
+        'verified': true,
         'image': 'assets/images/volunteer4.png',
       },
       {
         'name': 'Khalid Alhammadi',
         'rating': 4,
         'distance': '4 km away',
-        'verified': false,
+        'verified': true,
         'image': 'assets/images/volunteer5.png',
       }
     ];
