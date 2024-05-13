@@ -152,37 +152,57 @@ class QuestionOne extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Question 1'),
+        backgroundColor: Color(0xFF013A6B),  // Consistent theme color for AppBar
       ),
       body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Text(
-              'Are you a person of determination?',
-              style: TextStyle(fontSize: 20),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // If "Yes", proceed to QuestionTwo
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => QuestionTwo()),
-                );
-              },
-              child: Text('Yes', style: TextStyle(fontSize: 20)),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                // If "No", go directly to CustomizedPage
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => CustomizedPage(category: "Non-Determination")),
-                );
-              },
-              child: Text('No', style: TextStyle(fontSize: 20)),
-            ),
-          ],
+        child: Container(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center, // This aligns the column to the center vertically
+            children: <Widget>[
+              Text(
+                'Are you a person of determination?',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 24,  // Increase font size for better readability
+                  fontWeight: FontWeight.bold,  // Make the text bold
+                  color: Color(0xFF013A6B),  // Use theme color for text
+                ),
+              ),
+              SizedBox(height: 40),  // Add more space before the buttons
+              ElevatedButton(
+                onPressed: () {
+                  // If "Yes", proceed to QuestionTwo
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => QuestionTwo()),
+                  );
+                },
+                child: Text('Yes', style: TextStyle(fontSize: 20)),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF013A6B),  // Use theme color for button background
+                  foregroundColor: Colors.white,  // Text color on button
+                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),  // Padding for better touch area
+                ),
+              ),
+              SizedBox(height: 20),  // Space between buttons
+              ElevatedButton(
+                onPressed: () {
+                  // If "No", go directly to NormalUser page
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => NormalUser()),
+                  );
+                },
+                child: Text('No', style: TextStyle(fontSize: 20)),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.grey,  // Different color for 'No' option
+                  foregroundColor: Colors.white,  // Text color on button
+                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),  // Padding
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -192,28 +212,99 @@ class QuestionOne extends StatelessWidget {
 class QuestionTwo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // Categories for disabilities
+    List<Map<String, dynamic>> categories = [
+      {
+        'text': 'Physical Disability',
+        'icon': Icons.accessible_forward,
+      },
+      {
+        'text': 'Intellectual Disability',
+        'icon': Icons.psychology,
+      },
+      {
+        'text': 'Impaired Hearing',
+        'icon': Icons.hearing,
+      },
+      {
+        'text': 'Visual Impairment',
+        'icon': Icons.visibility_off,
+      },
+    ];
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Question 2'),
+        backgroundColor: Color(0xFF013A6B),
       ),
       body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Text(
-              'From which of the following categories?',
-              style: TextStyle(fontSize: 20),
-            ),
-            SizedBox(height: 20),
-            categoryButton(context, '  Physical Disability  '),
-            categoryButton(context, '  Intellectual Disability'),
-            categoryButton(context, '    Impaired Hearing     '),
-            categoryButton(context, '   Visual Impairment       '),
-          ],
+        child: Container(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center, // Aligns content vertically to the center
+            children: <Widget>[
+              Text(
+                'From which of the following categories?',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF013A6B),
+                ),
+              ),
+              SizedBox(height: 40),
+              Flexible( // Use Flexible to handle layout more gracefully when available space is limited
+                child: GridView.builder(
+                  shrinkWrap: true, // Ensures the grid does not fill all available space
+                  physics: NeverScrollableScrollPhysics(), // Disables scrolling within the GridView
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 20,
+                    mainAxisSpacing: 20,
+                    childAspectRatio: 3 / 2,
+                  ),
+                  itemCount: categories.length,
+                  itemBuilder: (context, index) {
+                    return ElevatedButton(
+                      onPressed: () {
+                        saveProfile(categories[index]['text']);
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => CustomizedPage(category: categories[index]['text'])),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFF013A6B),
+                        foregroundColor: Colors.white,
+                        padding: EdgeInsets.symmetric(vertical: 20),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(categories[index]['icon'], size: 40, color: Colors.white),
+                          SizedBox(height: 10),
+                          Text(categories[index]['text'], style: TextStyle(fontSize: 16), textAlign: TextAlign.center),
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
+
+  void saveProfile(String category) {
+    // Placeholder for save profile logic
+    print("Profile saved with category: $category");
+  }
+}
 
   Widget categoryButton(BuildContext context, String category) {
     return ElevatedButton(
@@ -231,7 +322,7 @@ class QuestionTwo extends StatelessWidget {
   void saveProfile(String category) {
     print("Profile saved with category: $category");
   }
-}
+
 
 class CustomizedPage extends StatelessWidget {
   final String category;
@@ -240,38 +331,125 @@ class CustomizedPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String message = "All set! Customized features have been added to the app based on your profile to enhance your experience.";
     return Scaffold(
       appBar: AppBar(
-        title: Text("Customized Features"),
+        title: Text("Customization Complete"),
+        backgroundColor: Color(0xFF013A6B),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(14.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                message,
-                style: TextStyle(fontSize: 20),
-                textAlign: TextAlign.center,
+      body: Container(
+        padding: EdgeInsets.all(20),
+        width: double.infinity,
+        color: Colors.white,  // Maintain a clean, white background
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(
+              Icons.check_circle_outline,
+              size: 100,
+              color: Color(0xFF013A6B),
+            ),
+            SizedBox(height: 30),
+            Text(
+              "Your app has been customized with features suited for your needs.",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF013A6B),
               ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () => Navigator.pushAndRemoveUntil(
+            ),
+            SizedBox(height: 40),
+            Text(
+              "Thank you for providing your preferences. Enjoy a personalized experience.",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 18,
+                color: Colors.grey[600],
+              ),
+            ),
+            SizedBox(height: 50),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => MainApplicationScreen()),
-                  ModalRoute.withName('/'),
+                  ModalRoute.withName('/MainApplicationScreen'),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFF013A6B),
+                foregroundColor: Colors.white,
+                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
                 ),
-                child: Text('Start the App', style: TextStyle(fontSize: 20)),
               ),
-            ],
-          ),
+              child: Text('Start the App', style: TextStyle(fontSize: 20)),
+            ),
+          ],
         ),
       ),
     );
   }
 }
+
+
+class NormalUser extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Profile Update Successful"),
+        backgroundColor: Color(0xFF013A6B),
+      ),
+      body: Container(
+        padding: EdgeInsets.all(20),
+        width: double.infinity,
+        color: Colors.white,  // Set the background to white
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(
+              Icons.check_circle_outline,
+              size: 120,
+              color: Color(0xFF013A6B),
+            ),
+            SizedBox(height: 30),
+            Text(
+              "Profile Successfully Updated!",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 22,  // Slightly smaller font size
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF013A6B),
+              ),
+            ),
+            SizedBox(height: 50),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => MainApplicationScreen()),
+                  ModalRoute.withName('/MainApplicationScreen'),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFF013A6B),
+                foregroundColor: Colors.white,
+                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
+              child: Text('Start the App', style: TextStyle(fontSize: 20)),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 
 
 class VolunteerProfilePage extends StatelessWidget {
@@ -395,7 +573,7 @@ class NafdeekPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("NAFDEEK Service"),
+        title: Text("NAFDEEK Portal"),
         backgroundColor: Color(0xFF013A6B),
       ),
       body: Center(
@@ -416,7 +594,7 @@ class NafdeekPage extends StatelessWidget {
                   ),
                   onPressed: () => Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => RequestServicePage()),
+                    MaterialPageRoute(builder: (context) => RequestNafdeekServicePage()),
                   ),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -446,7 +624,7 @@ class NafdeekPage extends StatelessWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Image.asset('assets/images/icon.png', width: 60, height: 60),
+                      Icon(Icons.person, size: 60, color: Colors.white),  // Using a white Flutter icon
                       SizedBox(height: 10),
                       Text('Volunteer Page', textAlign: TextAlign.center),
                     ],
@@ -460,6 +638,171 @@ class NafdeekPage extends StatelessWidget {
     );
   }
 }
+
+
+class RequestNafdeekServicePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("NAFDEEK Service"),
+        backgroundColor: Color(0xFF013A6B),
+      ),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Flexible(
+                child: ElevatedButton.icon(
+                  icon: Icon(Icons.location_on, size: 40),
+                  label: Text('Connect with Local Volunteers'),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AttentionPage()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF013A6B),
+                    foregroundColor: Colors.white,
+                    padding: EdgeInsets.symmetric(vertical: 17, horizontal: 15),
+                    textStyle: TextStyle(fontSize: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                ),
+              ),
+              SizedBox(height: 40),
+              Flexible(
+                child: ElevatedButton.icon(
+                  icon: Icon(Icons.video_call, size: 40),
+                  label: Text('Virtual Assistance   '),
+                  onPressed: () {
+                    // Implement the functionality for online help via video call
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF013A6B),
+                    foregroundColor: Colors.white,
+                    padding: EdgeInsets.symmetric(vertical: 17, horizontal: 50),
+                    textStyle: TextStyle(fontSize: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+
+class AttentionPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Location Permission"),
+        backgroundColor: Color(0xFF013A6B),
+      ),
+      body: Container(
+        width: double.infinity,
+        padding: EdgeInsets.all(20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Icon(
+              Icons.location_searching,
+              color: Color(0xFF013A6B),
+              size: 100,
+            ),
+            SizedBox(height: 30),
+            Container(
+              padding: EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 1,
+                    blurRadius: 6,
+                    offset: Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: Text(
+                "To use this service, you need to share your location with the Ministry of Interior.",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black54,
+                ),
+              ),
+            ),
+            SizedBox(height: 20),
+            Text(
+              "We respect your privacy and ensure that your data is handled with the highest security and confidentiality.",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.black45,
+              ),
+            ),
+            SizedBox(height: 40),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.green, // Accept button in green
+                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 30),
+                    textStyle: TextStyle(fontSize: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => RequestServicePage()),
+                  ),
+                  child: Text('Accept & Share Location'),
+                ),
+                SizedBox(width: 20), // Space between buttons
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red, // Deny button in red
+                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 30),
+                    textStyle: TextStyle(fontSize: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  onPressed: () => Navigator.pop(context),
+                  child: Text('Deny'),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+
+
+
 
 class RequestServicePage extends StatelessWidget {
   @override
@@ -519,61 +862,167 @@ class RequestServicePage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Request Service"),
+        title: Text("Locate Nearby Help"),
         backgroundColor: Color(0xFF013A6B),
       ),
-      body: ListView.separated(
-        itemCount: volunteers.length,
-        itemBuilder: (context, index) {
-          return Card(
-            child: ListTile(
-              leading: CircleAvatar(
-                backgroundImage: AssetImage(volunteers[index]['image']),
-              ),
-              title: Row(
+      body: FutureBuilder(
+        future: Future.delayed(Duration(seconds: 2)), // Simulate a network call delay
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Expanded(
-                    child: Text(
-                      volunteers[index]['name'],
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(fontSize: 16),  // Adjusted font size for the name
-                    ),
+                  CircularProgressIndicator(),
+                  SizedBox(height: 20),
+                  Text(
+                    'Searching for volunteers...',
+                    style: TextStyle(fontSize: 18),
                   ),
-                  if (volunteers[index]['verified'])
-                    Icon(Icons.verified, color: Color(0xFF013A6B), size: 14),
                 ],
               ),
-              subtitle: Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Row(
-                  children: <Widget>[
-                    ...List.generate(5, (i) => Icon(
-                      i < volunteers[index]['rating'] ? Icons.star : Icons.star_border,
-                      color: Colors.amber,
-                      size: 16,  // Adjusted star size
-                    )),
-                    SizedBox(width: 10),
-                    Text(
-                      volunteers[index]['distance'],
-                      style: TextStyle(fontSize: 12),  // Reduced font size for distance
+            );
+          } else {
+            return ListView.separated(
+              itemCount: volunteers.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      backgroundImage: AssetImage(volunteers[index]['image']),
                     ),
-                  ],
+                    title: Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            volunteers[index]['name'],
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        ),
+                        if (volunteers[index]['verified'])
+                          Icon(Icons.verified, color: Color(0xFF013A6B), size: 14),
+                      ],
+                    ),
+                    subtitle: Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Row(
+                        children: <Widget>[
+                          ...List.generate(
+                            5,
+                            (i) => Icon(
+                              i < volunteers[index]['rating'] ? Icons.star : Icons.star_border,
+                              color: Colors.amber,
+                              size: 16,
+                            ),
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            volunteers[index]['distance'],
+                            style: TextStyle(fontSize: 12),
+                          ),
+                        ],
+                      ),
+                    ),
+                    trailing: ElevatedButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => SendRequestPage()),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFF013A6B),
+                        foregroundColor: Colors.white,
+                      ),
+                      child: Text('Send a Request', style: TextStyle(fontSize: 12)),
+                    ),
+                  ),
+                );
+              },
+              separatorBuilder: (context, index) => SizedBox(height: 10),
+            );
+          }
+        },
+      ),
+    );
+  }
+}
+
+
+class SendRequestPage extends StatefulWidget {
+  @override
+  _SendRequestPageState createState() => _SendRequestPageState();
+}
+
+class _SendRequestPageState extends State<SendRequestPage> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _animation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: Duration(seconds: 2),
+      vsync: this,
+    )..repeat(reverse: true);
+    _animation = Tween<double>(begin: 0.5, end: 1.0).animate(_controller);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Request Sent"),
+        backgroundColor: Color(0xFF013A6B),
+      ),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ScaleTransition(
+                scale: _animation,
+                child: Icon(
+                  Icons.check_circle,
+                  color: Colors.green,
+                  size: 80,
                 ),
               ),
-              trailing: ElevatedButton(
+              SizedBox(height: 20),
+              Text(
+                'Your request has been sent to the volunteer.',
+                style: TextStyle(fontSize: 18),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 10),
+              Text(
+                'The volunteer will contact you within the next few minutes.',
+                style: TextStyle(fontSize: 16),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 40),
+              ElevatedButton(
                 onPressed: () {
-                  // Action to send a request to this volunteer
+                  Navigator.pop(context); // Navigate back to the previous screen
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF013A6B),  // Button background
-                  foregroundColor: Colors.white,  // Button foreground
+                  backgroundColor: Color(0xFF013A6B),
+                  foregroundColor: Colors.white,
+                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
                 ),
-                child: Text('Send a Request', style: TextStyle(fontSize: 12)),  // Adjusted font size
+                child: Text('OK', style: TextStyle(fontSize: 16)),
               ),
-            ),
-          );
-        },
-        separatorBuilder: (context, index) => SizedBox(height: 10),  // Space between each card
+            ],
+          ),
+        ),
       ),
     );
   }
