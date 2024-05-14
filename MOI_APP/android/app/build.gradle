@@ -41,6 +41,16 @@ android {
     }
 
     defaultConfig {
+        android {
+    compileSdkVersion 30
+
+    defaultConfig {
+        applicationId "com.example.yourapp"
+        minSdkVersion 16 // or any version >= 16
+        targetSdkVersion 30
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
+    }
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.example.flutter_application_1"
         // You can update the following values to match your application needs.
