@@ -43,6 +43,8 @@ class MyApp extends StatelessWidget {
   }
 }
 
+
+
 class IntroductionScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -54,16 +56,16 @@ class IntroductionScreen extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Spacer(flex: 2),
-              Text(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24.0),
+              child: Text(
                 'To enhance your experience we need to build a profile for you',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 22,  // Slightly larger font size for better emphasis
                   color: Colors.white,  // Bright, clear color for better readability
                   fontWeight: FontWeight.bold,  // Increases the weight of the font
                   shadows: [
@@ -90,22 +92,33 @@ class IntroductionScreen extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => QuestionOne()),
-                ),
-                child: Text('Start', style: TextStyle(fontSize: 20)),
+            ),
+            SizedBox(height: 30),  // More space before the button
+            ElevatedButton(
+              onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => QuestionOne()),
               ),
-              Spacer(flex: 1),
-            ],
-          ),
+              child: Text('Start', style: TextStyle(fontSize: 20)),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFF013A6B),  // Consistent theme color
+                foregroundColor: Colors.white,  // Text color on button
+                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),  // Rounded corners
+                ),
+                elevation: 5,  // Add a slight shadow for the button
+              ),
+            ),
+            SizedBox(height: 120),  // Add space at the bottom
+          ],
         ),
       ),
     );
   }
 }
+
+
 
 
 class MainApplicationScreen extends StatelessWidget {
@@ -152,25 +165,25 @@ class QuestionOne extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Question 1'),
-        backgroundColor: Color(0xFF013A6B),  // Consistent theme color for AppBar
+        backgroundColor: Color(0xFF013A6B), // Consistent theme color for AppBar
       ),
       body: Center(
         child: Container(
           padding: EdgeInsets.all(20),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center, // This aligns the column to the center vertically
+            mainAxisAlignment: MainAxisAlignment.center, // Align column to the center vertically
             children: <Widget>[
               Text(
                 'Are you a person of determination?',
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                  fontSize: 24,  // Increase font size for better readability
-                  fontWeight: FontWeight.bold,  // Make the text bold
-                  color: Color(0xFF013A6B),  // Use theme color for text
+                  fontSize: 24, // Increase font size for better readability
+                  fontWeight: FontWeight.bold, // Make the text bold
+                  color: Color(0xFF013A6B), // Use theme color for text
                 ),
               ),
-              SizedBox(height: 40),  // Add more space before the buttons
-              ElevatedButton(
+              SizedBox(height: 20), // Add more space before the buttons
+              ElevatedButton.icon(
                 onPressed: () {
                   // If "Yes", proceed to QuestionTwo
                   Navigator.push(
@@ -178,15 +191,19 @@ class QuestionOne extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => QuestionTwo()),
                   );
                 },
-                child: Text('Yes', style: TextStyle(fontSize: 20)),
+                icon: Icon(Icons.check_circle, size: 28),
+                label: Text('Yes', style: TextStyle(fontSize: 20)),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF013A6B),  // Use theme color for button background
-                  foregroundColor: Colors.white,  // Text color on button
-                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),  // Padding for better touch area
+                  backgroundColor: Color(0xFF013A6B), // Use theme color for button background
+                  foregroundColor: Colors.white, // Text color on button
+                  padding: EdgeInsets.symmetric(vertical: 16, horizontal: 30), // Padding for better touch area
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10), // Rounded corners
+                  ),
                 ),
               ),
-              SizedBox(height: 20),  // Space between buttons
-              ElevatedButton(
+              SizedBox(height: 20), // Space between buttons
+              ElevatedButton.icon(
                 onPressed: () {
                   // If "No", go directly to NormalUser page
                   Navigator.push(
@@ -194,11 +211,15 @@ class QuestionOne extends StatelessWidget {
                     MaterialPageRoute(builder: (context) => NormalUser()),
                   );
                 },
-                child: Text('No', style: TextStyle(fontSize: 20)),
+                icon: Icon(Icons.cancel, size: 28),
+                label: Text('No', style: TextStyle(fontSize: 20)),
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.grey,  // Different color for 'No' option
-                  foregroundColor: Colors.white,  // Text color on button
-                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),  // Padding
+                  backgroundColor: Colors.grey, // Different color for 'No' option
+                  foregroundColor: Colors.white, // Text color on button
+                  padding: EdgeInsets.symmetric(vertical: 16, horizontal: 32), // Padding
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10), // Rounded corners
+                  ),
                 ),
               ),
             ],
@@ -208,6 +229,7 @@ class QuestionOne extends StatelessWidget {
     );
   }
 }
+
 
 class QuestionTwo extends StatelessWidget {
   @override
@@ -735,7 +757,7 @@ class RequestNafdeekServicePage extends StatelessWidget {
               Flexible(
                 child: ElevatedButton.icon(
                   icon: Icon(Icons.video_call, size: 40),
-                  label: Text('Virtual Assistance    '),
+                  label: Text('Virtual Assistance for PODs'),
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -745,7 +767,7 @@ class RequestNafdeekServicePage extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF013A6B),
                     foregroundColor: Colors.white,
-                    padding: EdgeInsets.symmetric(vertical: 17, horizontal: 50),
+                    padding: EdgeInsets.symmetric(vertical: 17, horizontal: 25),
                     textStyle: TextStyle(fontSize: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
@@ -1056,6 +1078,7 @@ class _RequestServicePageState extends State<RequestServicePage> with SingleTick
 
 
 
+
 class SendRequestPage extends StatefulWidget {
   @override
   _SendRequestPageState createState() => _SendRequestPageState();
@@ -1105,13 +1128,20 @@ class _SendRequestPageState extends State<SendRequestPage> with SingleTickerProv
               SizedBox(height: 20),
               Text(
                 'Your request has been sent to the volunteer.',
-                style: TextStyle(fontSize: 18),
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF013A6B),
+                ),
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 10),
               Text(
                 'The volunteer will contact you within the next few minutes.',
-                style: TextStyle(fontSize: 16),
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black87,
+                ),
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 40),
@@ -1126,6 +1156,15 @@ class _SendRequestPageState extends State<SendRequestPage> with SingleTickerProv
                 ),
                 child: Text('OK', style: TextStyle(fontSize: 16)),
               ),
+              SizedBox(height: 20),
+              Text(
+                'Note: All communication is monitored by the Ministry of Interior (MOI).',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontFamily: 'Arial', // Use a formal, non-curved font
+                ),
+                textAlign: TextAlign.center,
+              ),
             ],
           ),
         ),
@@ -1133,6 +1172,9 @@ class _SendRequestPageState extends State<SendRequestPage> with SingleTickerProv
     );
   }
 }
+
+
+
 
 
 
