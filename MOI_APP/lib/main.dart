@@ -164,15 +164,48 @@ class VolunteerProfilePage extends StatelessWidget {
               ),
             ),
             SizedBox(height: 20),
-            ElevatedButton.icon(
-              icon: Icon(Icons.add_circle_outline, color: Colors.white),
-              label: Text('Start New Task'),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF013A6B),
-                foregroundColor: Colors.white,
-                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      icon: Icon(Icons.book, color: Colors.white),
+                      label: Text('New Course'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFF013A6B),
+                        foregroundColor: Colors.white,
+                        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => CourseListPage()),
+                        );
+                      },
+                    ),
+                  ),
+                  SizedBox(width: 20),
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      icon: Icon(Icons.volunteer_activism, color: Colors.white),
+                      label: Text('Volunteer now'),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xFF013A6B),
+                        foregroundColor: Colors.white,
+                        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => VolunteerTrackingPage()),
+                        );
+                      },
+                    ),
+                  ),
+                ],
               ),
-              onPressed: () {},
             ),
             SizedBox(height: 20),
           ],
@@ -181,6 +214,209 @@ class VolunteerProfilePage extends StatelessWidget {
     );
   }
 }
+
+
+class CourseListPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Available Courses"),
+        backgroundColor: Color(0xFF013A6B),
+      ),
+      body: ListView(
+        padding: EdgeInsets.all(10),
+        children: [
+          CourseItem(
+            courseName: 'First Aid Basics',
+            description: 'Learn the basics of first aid and emergency response.',
+            points: 50,
+          ),
+          CourseItem(
+            courseName: 'Volunteer Management',
+            description: 'Learn how to effectively manage and coordinate volunteer efforts.',
+            points: 60,
+          ),
+          CourseItem(
+            courseName: 'Community Engagement',
+            description: 'Strategies and techniques for engaging with the community.',
+            points: 40,
+          ),
+          CourseItem(
+            courseName: 'Support for People of Determination',
+            description: 'Understand the needs and how to support People of Determination (PODs).',
+            points: 70,
+          ),
+          CourseItem(
+            courseName: 'Assisting Senior Citizens',
+            description: 'Learn how to assist senior citizens in various daily activities.',
+            points: 55,
+          ),
+          CourseItem(
+            courseName: 'Mental Health Awareness',
+            description: 'Recognize signs of mental health issues and provide appropriate support.',
+            points: 45,
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class CourseItem extends StatelessWidget {
+  final String courseName;
+  final String description;
+  final int points;
+
+  CourseItem({
+    required this.courseName,
+    required this.description,
+    required this.points,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      margin: EdgeInsets.symmetric(vertical: 10),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              courseName,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+            SizedBox(height: 5),
+            Text(
+              description,
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.grey[600],
+              ),
+            ),
+            SizedBox(height: 10),
+            Text(
+              'Points: $points',
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF013A6B),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+
+class VolunteerTrackingPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Volunteer Tracking"),
+        backgroundColor: Color(0xFF013A6B),
+      ),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(
+                Icons.volunteer_activism,
+                color: Color(0xFF013A6B),
+                size: 100,
+              ),
+              SizedBox(height: 20),
+              Text(
+                'Your State Has Changed to Be "Ready to Help"',
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF013A6B),
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 20),
+              Text(
+                'The Ministry of Interior is currently monitoring your location. We will find the nearest help request for you.',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.black87,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(height: 30),
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(10),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 1,
+                      blurRadius: 6,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+                ),
+                padding: EdgeInsets.all(20),
+                child: Column(
+                  children: [
+                    Text(
+                      'Note:',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.red,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      'All communications and activities are monitored for your safety.',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.black87,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 40),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF013A6B),
+                  foregroundColor: Colors.white,
+                  padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: Text(
+                  'OK',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
 
 class NafdeekPage extends StatefulWidget {
   @override
