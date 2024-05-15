@@ -566,7 +566,7 @@ class RequestNafdeekServicePage extends StatelessWidget {
             children: [
               Flexible(
                 child: ElevatedButton.icon(
-                  icon: Icon(Icons.location_on, size: 40),
+                  icon: Icon(Icons.location_on, size: 36),
                   label: Text('Connect with Local Volunteers'),
                   onPressed: () {
                     Navigator.push(
@@ -577,7 +577,7 @@ class RequestNafdeekServicePage extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF013A6B),
                     foregroundColor: Colors.white,
-                    padding: EdgeInsets.symmetric(vertical: 17, horizontal: 15),
+                    padding: EdgeInsets.symmetric(vertical: 17, horizontal: 14),
                     textStyle: TextStyle(fontSize: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
@@ -599,7 +599,7 @@ class RequestNafdeekServicePage extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF013A6B),
                     foregroundColor: Colors.white,
-                    padding: EdgeInsets.symmetric(vertical: 17, horizontal: 25),
+                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 54),
                     textStyle: TextStyle(fontSize: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
@@ -710,6 +710,7 @@ class AttentionPage extends StatelessWidget {
   }
 }
 
+
 class RequestServicePage extends StatefulWidget {
   @override
   _RequestServicePageState createState() => _RequestServicePageState();
@@ -784,14 +785,18 @@ class _RequestServicePageState extends State<RequestServicePage> with SingleTick
     _animation = Tween<double>(begin: 0.5, end: 1.0).animate(_controller);
 
     Future.delayed(Duration(seconds: 3), () {
-      setState(() {
-        isSearching = false;
-      });
-      for (int i = 0; i < initialVolunteers.length; i++) {
-        Future.delayed(Duration(milliseconds: i * 300), () {
-          _listKey.currentState?.insertItem(i);
-          volunteers.add(initialVolunteers[i]);
+      if (mounted) {
+        setState(() {
+          isSearching = false;
         });
+        for (int i = 0; i < initialVolunteers.length; i++) {
+          Future.delayed(Duration(milliseconds: i * 300), () {
+            if (mounted) {
+              _listKey.currentState?.insertItem(i);
+              volunteers.add(initialVolunteers[i]);
+            }
+          });
+        }
       }
     });
   }
@@ -855,7 +860,7 @@ class _RequestServicePageState extends State<RequestServicePage> with SingleTick
                 child: Text(
                   volunteer['name'],
                   overflow: TextOverflow.ellipsis,
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(fontSize: 15),
                 ),
               ),
               if (volunteer['verified'])
@@ -875,9 +880,12 @@ class _RequestServicePageState extends State<RequestServicePage> with SingleTick
                   ),
                 ),
                 SizedBox(width: 10),
-                Text(
-                  volunteer['distance'],
-                  style: TextStyle(fontSize: 12),
+                Expanded(
+                  child: Text(
+                    volunteer['distance'],
+                    style: TextStyle(fontSize: 12),
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               ],
             ),
@@ -900,6 +908,7 @@ class _RequestServicePageState extends State<RequestServicePage> with SingleTick
     );
   }
 }
+
 
 class SendRequestPage extends StatefulWidget {
   @override
