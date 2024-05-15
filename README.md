@@ -62,7 +62,7 @@ To get started with Nafdeek:
 
  **Excute this command**
 
-   git clone https://github.com/amarzouk140/Nafdeek.git && cd Nafdeek/MOI_APP && chmod 777 setup.sh && ./setup.sh
+   git clone https://github.com/amarzouk140/Nafdeek.git && cd Nafdeek/MOI_APP && chmod 777 build.sh && ./build.sh
 
    
 ## Contact
