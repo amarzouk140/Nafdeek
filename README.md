@@ -66,7 +66,4 @@ For more information, please contact us at [amarzouk@student.42abudhabi.ae](mail
  **Excute this command**
 
    ```sh
-   git clone https://github.com/amarzouk140/Nafdeek.git && cd Nafdeek/MOI_APP && chmod 777 build.sh && ./build.sh 
-   
-   
-
+   git clone https://github.com/amarzouk140/Nafdeek.git && cd Nafdeek/MOI_APP && chmod 777 build.sh && ./build.sh
