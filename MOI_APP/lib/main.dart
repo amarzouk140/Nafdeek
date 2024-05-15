@@ -61,8 +61,8 @@ class MainApplicationScreen extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: MediaQuery.of(context).padding.top - 5,
-            left: 275,
+            top: MediaQuery.of(context).padding.top + 2,
+            left: 260,
             child: IconButton(
               icon: Image.asset('assets/images/logo2.png', width: iconSize, height: iconSize),
               onPressed: () {
@@ -589,7 +589,7 @@ class RequestNafdeekServicePage extends StatelessWidget {
               Flexible(
                 child: ElevatedButton.icon(
                   icon: Icon(Icons.video_call, size: 40),
-                  label: Text('Virtual Assistance for PODs'),
+                  label: Text('Virtual Assistance'),
                   onPressed: () {
                     Navigator.push(
                       context,
