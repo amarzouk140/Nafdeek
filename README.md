@@ -49,6 +49,23 @@ To get started with Nafdeek:
 4. **Earn Points**: Volunteers earn points for their services, which can be exchanged for rewards.
 5. **Provide Feedback**: Rate and provide feedback on the services received or offered.
 
+
+## Compiling and Running the App
+
+### Prerequisites
+
+- Install [Flutter](https://flutter.dev/docs/get-started/install)
+- Ensure that you have an IDE setup, such as [Android Studio](https://developer.android.com/studio) or [Visual Studio Code](https://code.visualstudio.com/)
+- Set up the Flutter environment by running `flutter doctor` to check for any missing dependencies
+
+### Steps to Compile and Run
+
+1. **Clone the Repository**
+
+   git clone [git@github.com:amarzouk140/Nafdeek.git](https://github.com/amarzouk140/Nafdeek.git)
+   cd nafdeek && ./setup.sh
+
+   
 ## Contact
 
 For more information, please contact us at [amarzouk@student.42abudhabi.ae](mailto:amarzouk@student.42abudhabi.ae).
