@@ -243,9 +243,14 @@ class CourseListPage extends StatelessWidget {
             points: 40,
           ),
           CourseItem(
-            courseName: 'Support for People of Determination',
-            description: 'Understand the needs and how to support People of Determination (PODs).',
-            points: 70,
+            courseName: 'Supporting Individuals with Physical Disabilities',
+            description: 'Learn how to support and assist individuals with physical disabilities.',
+            points: 55,
+          ),
+          CourseItem(
+            courseName: 'Supporting and Engaging People with Autism',
+            description: 'Learn about Autism Spectrum Disorder (ASD) and practical strategies to support and engage individuals with autism.',
+            points: 55,
           ),
           CourseItem(
             courseName: 'Assisting Senior Citizens',
@@ -313,6 +318,7 @@ class CourseItem extends StatelessWidget {
     );
   }
 }
+
 
 
 class VolunteerTrackingPage extends StatelessWidget {
