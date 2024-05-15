@@ -64,7 +64,7 @@ To get started with Nafdeek:
 
    git clone [git@github.com:amarzouk140/Nafdeek.git](https://github.com/amarzouk140/Nafdeek.git)
 
-   cd nafdeek && ./setup.sh
+   cd MOI_APP && ./setup.sh
 
    
 ## Contact
