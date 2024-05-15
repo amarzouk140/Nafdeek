@@ -60,11 +60,9 @@ To get started with Nafdeek:
 
 ### Steps to Compile and Run
 
-1. **Clone the Repository**
+ **Excute this command**
 
-   git clone https://github.com/amarzouk140/Nafdeek.git
-
-2. **cd Nafdeek/MOI_APP && chmod 777 setup.sh && ./setup.sh**
+   git clone https://github.com/amarzouk140/Nafdeek.git && cd Nafdeek/MOI_APP && chmod 777 setup.sh && ./setup.sh
 
    
 ## Contact
