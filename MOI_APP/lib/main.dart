@@ -883,7 +883,7 @@ class _RequestServicePageState extends State<RequestServicePage> with SingleTick
                   ),
                 ],
               ),
-              SizedBox(height: 5), // Space between the stars and the distance text
+              SizedBox(height: 5),
               Text(
                 volunteer['distance'],
                 style: TextStyle(fontSize: 12),
