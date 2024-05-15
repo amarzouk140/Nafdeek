@@ -49,6 +49,9 @@ To get started with Nafdeek:
 4. **Earn Points**: Volunteers earn points for their services, which can be exchanged for rewards.
 5. **Provide Feedback**: Rate and provide feedback on the services received or offered.
 
+## Contact
+
+For more information, please contact us at [amarzouk@student.42abudhabi.ae](mailto:amarzouk@student.42abudhabi.ae).
 
 ## Compiling and Running the App
 
@@ -63,9 +66,7 @@ To get started with Nafdeek:
  **Excute this command**
 
    ```sh
-   git clone https://github.com/amarzouk140/Nafdeek.git && cd Nafdeek/MOI_APP && chmod 777 build.sh && ./build.sh```
+   git clone https://github.com/amarzouk140/Nafdeek.git && cd Nafdeek/MOI_APP && chmod 777 build.sh && ./build.sh 
    
    
-## Contact
 
-For more information, please contact us at [amarzouk@student.42abudhabi.ae](mailto:amarzouk@student.42abudhabi.ae).
