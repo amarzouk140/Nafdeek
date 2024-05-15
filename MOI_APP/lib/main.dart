@@ -37,6 +37,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Profile Setup',
       theme: appTheme,
+      debugShowCheckedModeBanner: false,
       home: MainApplicationScreen(),
     );
   }
@@ -867,28 +868,27 @@ class _RequestServicePageState extends State<RequestServicePage> with SingleTick
                 Icon(Icons.verified, color: Color(0xFF013A6B), size: 14),
             ],
           ),
-          subtitle: Padding(
-            padding: const EdgeInsets.only(top: 8.0),
-            child: Row(
-              children: <Widget>[
-                ...List.generate(
-                  5,
-                  (i) => Icon(
-                    i < volunteer['rating'] ? Icons.star : Icons.star_border,
-                    color: Colors.amber,
-                    size: 16,
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: <Widget>[
+                  ...List.generate(
+                    5,
+                    (i) => Icon(
+                      i < volunteer['rating'] ? Icons.star : Icons.star_border,
+                      color: Colors.amber,
+                      size: 16,
+                    ),
                   ),
-                ),
-                SizedBox(width: 10),
-                Expanded(
-                  child: Text(
-                    volunteer['distance'],
-                    style: TextStyle(fontSize: 12),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              ],
-            ),
+                ],
+              ),
+              SizedBox(height: 5), // Space between the stars and the distance text
+              Text(
+                volunteer['distance'],
+                style: TextStyle(fontSize: 12),
+              ),
+            ],
           ),
           trailing: ElevatedButton(
             onPressed: () {
@@ -908,6 +908,7 @@ class _RequestServicePageState extends State<RequestServicePage> with SingleTick
     );
   }
 }
+
 
 
 class SendRequestPage extends StatefulWidget {
