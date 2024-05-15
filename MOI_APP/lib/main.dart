@@ -194,7 +194,7 @@ class VolunteerProfilePage extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Color(0xFF013A6B),
                         foregroundColor: Colors.white,
-                        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 24),
+                        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 22),
                       ),
                       onPressed: () {
                         Navigator.push(
